@@ -32,6 +32,7 @@ jobs:
         pip install -r ./backend/requirements.txt 
     - name: Test with flake8 and django tests
       env:
+        PYTHONPATH: ./backend
         POSTGRES_USER: django_user
         POSTGRES_PASSWORD: django_password
         POSTGRES_DB: django_db
@@ -39,7 +40,7 @@ jobs:
         DB_PORT: 5432
       run: |
         python -m flake8 backend/
-        python -m pytest kittygram_final/tests
+        python -m pytest tests/
   build_and_push_to_docker_hub:
     name: Push Docker image to DockerHub
     runs-on: ubuntu-latest
