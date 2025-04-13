@@ -1,5 +1,3 @@
-version: '3'
-
 volumes:
   pg_data:
   static:
@@ -14,7 +12,7 @@ services:
     image: julia949/kittygram_backend
     env_file: .env
     volumes:
-      - static_volume:/backend_static
+      - static:/backend_static
   frontend:
     image: julia949/kittygram_frontend
     env_file: .env
