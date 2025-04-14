@@ -127,6 +127,8 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
+    - name: Create .env file
+      run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
     - name: Copy docker-compose.yml via ssh
       uses: appleboy/scp-action@master
       with:
@@ -143,13 +145,6 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        envs: |
-          PYTHONPATH: ./backend
-          POSTGRES_USER: django_user
-          POSTGRES_PASSWORD: django_password
-          POSTGRES_DB: django_db
-          DB_HOST: 127.0.0.1
-          DB_PORT: 5432
         script: |
           cd kittygram
           sudo docker compose -f docker-compose.production.yml pull
