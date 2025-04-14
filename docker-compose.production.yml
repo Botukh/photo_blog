@@ -23,7 +23,7 @@ services:
     command: cp -r /app/build/. /static/
     volumes:
       - static:/frontend_static
-  gateway:
+  nginx:
     image: julia949/kittygram_gateway
     env_file: .env
     ports:
