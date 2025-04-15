@@ -1,6 +1,7 @@
 volumes:
   pg_data:
   static:
+  media:
 
 services:
   db:
@@ -8,6 +9,7 @@ services:
     env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data
+
   backend:
     image: julia949/kittygram_backend
     env_file: .env
@@ -15,18 +17,22 @@ services:
       - db
     volumes:
       - static:/backend_static
+      - media:/media
+
   frontend:
     image: julia949/kittygram_frontend
     env_file: .env
-    depends_on:
-      - db
     command: cp -r /app/build/. /static/
     volumes:
       - static:/frontend_static
+
   nginx:
     image: julia949/kittygram_gateway
     env_file: .env
+    depends_on:
+      - backend
     ports:
       - 9000:80
     volumes:
       - static:/static
+      - media:/media
