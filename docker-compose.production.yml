@@ -16,6 +16,7 @@ services:
     depends_on:
       - db
     volumes:
+      - /home/yc-user/kittygram/.env:/app/backend/.env:ro
       - static:/backend_static
       - media:/media
 
