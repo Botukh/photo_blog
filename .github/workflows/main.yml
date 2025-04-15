@@ -151,14 +151,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Copy .env docker-compose.yml via ssh
+      - name: Copy docker-compose.yml via ssh
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          source: "docker-compose.production.yml, .env"
+          source: "docker-compose.production.yml"
           target: "kittygram"
 
       - name: Executing remote ssh commands to deploy
@@ -170,6 +170,16 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd kittygram
+            cat > .env << EOF
+            SECRET_KEY=django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$
+            DEBUG=False
+            ALLOWED_HOSTS=localhost,130.193.42.80,catsservice.duckdns.org
+            POSTGRES_DB=kittygram
+            POSTGRES_USER=kittygram_user
+            POSTGRES_PASSWORD=kittygram_password
+            DB_HOST=db
+            DB_PORT=5432
+            EOF
             sudo docker compose -f docker-compose.production.yml pull
             sudo docker compose -f docker-compose.production.yml down
             sudo docker compose -f docker-compose.production.yml up -d
