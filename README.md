@@ -1,4 +1,4 @@
-![Build Status](https://github.com/Botukh/kittygram_final/workflows/main.yml/badge.svg)
+![Build Status](https://github.com/Botukh/kittygram_final/actions/workflows/main.yml/badge.svg?event=push)
 
 # Kittygram
 
