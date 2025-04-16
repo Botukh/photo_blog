@@ -1,26 +1,78 @@
-#  Как работать с репозиторием финального задания
+# Kittygram
 
-## Что нужно сделать
+Kittygram — это современное приложение для обмена фотографиями котов и общения пользователей. Проект реализован в виде REST API на Django и контейнеризирован с использованием Docker. Он включает как бэкенд с возможностями создания, редактирования и просмотра публикаций, комментариев, групп и подписок, так и фронтенд для удобного пользовательского интерфейса. CI/CD с GitHub Actions обеспечивает автоматическое тестирование, сборку образов и деплой на удалённый сервер.
 
-Настроить запуск проекта Kittygram в контейнерах и CI/CD с помощью GitHub Actions
+---
 
-## Как проверить работу с помощью автотестов
+## Функциональность
 
-В корне репозитория создайте файл tests.yml со следующим содержимым:
-```yaml
-repo_owner: ваш_логин_на_гитхабе
-kittygram_domain: полная ссылка (https://доменное_имя) на ваш проект Kittygram
-taski_domain: полная ссылка (https://доменное_имя) на ваш проект Taski
-dockerhub_username: ваш_логин_на_докерхабе
-```
+- **Публикации:**  
+  - Получение списка публикаций с поддержкой пагинации (через параметры `limit` и `offset`).  
+  - Создание, обновление и удаление постов (редактировать/удалять может только автор).
 
-Скопируйте содержимое файла `.github/workflows/main.yml` в файл `kittygram_workflow.yml` в корневой директории проекта.
+- **Комментарии:**  
+  - Получение комментариев к постам (без пагинации).  
+  - Создание, редактирование и удаление комментариев (только автор имеет право изменять или удалять).
 
-Для локального запуска тестов создайте виртуальное окружение, установите в него зависимости из backend/requirements.txt и запустите в корневой директории проекта `pytest`.
+- **Аутентификация:**  
+  - JWT-аутентификация с использованием `rest_framework_simplejwt` и Djoser.
 
-## Чек-лист для проверки перед отправкой задания
+- **Контейнеризация и CI/CD:**  
+  - Проект развёрнут с помощью Docker (backend, frontend, gateway, база PostgreSQL) и orchestrated через docker-compose.  
+  - GitHub Actions автоматизирует тестирование, сборку образов (kittygram_backend, kittygram_frontend, kittygram_gateway), деплой на удалённый сервер и уведомление в Telegram.
 
-- Проект Taski доступен по доменному имени, указанному в `tests.yml`.
-- Проект Kittygram доступен по доменному имени, указанному в `tests.yml`.
-- Пуш в ветку main запускает тестирование и деплой Kittygram, а после успешного деплоя вам приходит сообщение в телеграм.
-- В корне проекта есть файл `kittygram_workflow.yml`.
+---
+
+## Стек технологий
+
+- **Backend:** Python, Django, Django REST Framework  
+- **Аутентификация:** JWT (rest_framework_simplejwt), Djoser  
+- **База данных:** PostgreSQL 13  
+- **Контейнеризация:** Docker, docker-compose  
+- **Gateway:** Nginx  
+- **CI/CD:** GitHub Actions  
+- **Frontend:** JavaScript
+
+---
+
+## Развёртывание проекта
+
+### 1. Клонирование репозитория и подготовка окружения
+
+git clone https://github.com/<your-github-username>/kittygram_final.git
+cd kittygram_final
+
+### 2. Создание и активация виртуального окружения (локальная разработка)
+
+python -m venv venv
+source venv/bin/activate
+
+### 3. Создайте файл .env в корне проекта. Пример содержимого:
+
+# Настройки Django
+DJANGO_SECRET_KEY=your_production_secret_key
+DEBUG=False
+ALLOWED_HOSTS=your_domain.com,localhost
+
+# База данных PostgreSQL
+DATABASE_NAME=kittygram_db
+DATABASE_USER=your_db_user
+DATABASE_PASSWORD=your_db_password
+DATABASE_HOST=db
+DATABASE_PORT=5432
+
+# Другие переменные (например, настройки Telegram для уведомлений)
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TELEGRAM_CHAT_ID=your_chat_id
+
+### 4. CI/CD и деплой
+
+При пуше в ветку main запускается workflow GitHub Actions, который:
+- Проверяет код (PEP8, тесты) для backend и frontend.
+- Собирает Docker-образы: kittygram_backend, kittygram_frontend, kittygram_gateway.
+- Отправляет образы на Docker Hub (замените dockerhub_username на ваш логин).
+- Обновляет контейнеры на удалённом сервере через docker-compose.
+- Выполняет миграции, сбор статики.
+- Отправляет уведомление в Telegram об успешном деплое.
+
+Автор - Юлия Ботух
