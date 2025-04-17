@@ -17,7 +17,7 @@ services:
       - db
     volumes:
       - static:/backend_static
-      - media:/media
+      - media:/app/backend/media
 
   frontend:
     image: julia949/kittygram_frontend
