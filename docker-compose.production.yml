@@ -1,7 +1,6 @@
 volumes:
   pg_data:
   static:
-  media:
 
 services:
   db:
@@ -17,7 +16,8 @@ services:
       - db
     volumes:
       - static:/static
-      - media:/app/media
+      - ./media:/app/media
+
 
   frontend:
     image: julia949/kittygram_frontend
