@@ -34,5 +34,6 @@ services:
     ports:
       - 9000:80
     volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
       - static:/static
       - ./media:/app/media
