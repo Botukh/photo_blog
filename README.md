@@ -41,31 +41,31 @@ Photo_blog — это приложение для обмена фотограф�
 
 ### 1. Клонирование репозитория и подготовка окружения
 
-git clone https://github.com/Botukh/photo_blog.git
-cd photo_blog
+- git clone https://github.com/Botukh/photo_blog.git
+- cd photo_blog
 
 ### 2. Создание и активация виртуального окружения (локальная разработка)
 
-python -m venv venv
-source venv/bin/activate
+- python -m venv venv
+- source venv/bin/activate
 
 ### 3. Создайте файл .env в корне проекта. Пример содержимого:
 
 **Настройки Django**
-DJANGO_SECRET_KEY=your_production_secret_key
-DEBUG=False
-ALLOWED_HOSTS=your_domain.com,localhost
+- DJANGO_SECRET_KEY=your_production_secret_key
+- DEBUG=False
+- ALLOWED_HOSTS=your_domain.com,localhost
 
 **База данных PostgreSQL**
-DATABASE_NAME=kittygram_db
-DATABASE_USER=your_db_user
-DATABASE_PASSWORD=your_db_password
-DATABASE_HOST=db
-DATABASE_PORT=5432
+- DATABASE_NAME=kittygram_db
+- DATABASE_USER=your_db_user
+- DATABASE_PASSWORD=your_db_password
+- DATABASE_HOST=db
+- DATABASE_PORT=5432
 
 **Другие переменные (например, настройки Telegram для уведомлений)**
-TELEGRAM_BOT_TOKEN=your_telegram_bot_token
-TELEGRAM_CHAT_ID=your_chat_id
+- TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+- TELEGRAM_CHAT_ID=your_chat_id
 
 ### 4. CI/CD и деплой
 
